@@ -1,0 +1,798 @@
+---
+title: An R Markdown document converted from "/content/02_11_23_session1_R.ipynb"
+output: html_document
+---
+
+## R Lİnkleri;
+
+
+*   https://www.r-project.org/
+*   https://r4ds.had.co.nz/
+
+*   https://rstudio-education.github.io/hopr/starting.html
+*   https://intro2r.com/
+
+
+*   https://info201.github.io/r-intro.html
+
+
+
+
+
+
+```{r}
+# R version
+R.version
+```
+
+```{r}
+R.version.string
+```
+
+```{r}
+R.Version()
+```
+
+```{r}
+# Kurulum ile gelmeyen bir paketi yüklemek için
+install.packages("dplyr")
+```
+
+```{r}
+library("dplyr")  # programa almak/yüklemek
+```
+
+```{r}
+# Bir R programını başka bir programda çalıştırmak için
+source("test.R")
+```
+
+```{r}
+# Bir paket hakkında yardım almak
+help(dplyr)
+```
+
+```{r}
+?dplyr
+```
+
+```{r}
+#paket hakkında daha detaylı bilgi almak için
+library(help="dplyr")
+```
+
+```{r}
+vignette(package="dplyr") #paket hakkında özet bilgi verir
+```
+
+```{r}
+?print
+```
+
+```{r}
+# R web sitesinden yardım almak için de
+RSiteSearch("pow")
+```
+
+```{r}
+# Yüklü paketlerin bir listesi için
+installed.packages()[,c("Package", "Version")]
+```
+
+```{r}
+# bir fonksiyonun paketini öğrenmek için
+find("sum")
+```
+
+```{r}
+# bir fonksiyonun örnek kullanımı hakkında bilgi için
+example("sum")
+```
+
+# CRAN deposunda yüklenebilir durumda olan paketlerin listesi:
+https://cran.r-project.org/web/packages/available_packages_by_name.html
+
+```{r}
+# CRAN deposundaki install edilebilir paket sayısı
+a = available.packages()
+length(row.names(a))
+```
+
+```{r}
+# Kendi paketinizi oluşturmak için
+library(devtools)
+usethis::create_package("mypackage")
+```
+
+```{r}
+# Bir paketini kaldırmak için
+remove.packages("mypackage")
+```
+
+```{r}
+update.packages() # Güncellemek için
+```
+
+```{r}
+# çakışan paketlerde fonksiyon
+library("tidyverse")
+```
+
+```{r}
+install.packages("conflicted")
+```
+
+```{r}
+library(conflicted)
+```
+
+```{r}
+# çakışan fonks. için paket seçimi
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+```
+
+```{r}
+# TEk bir mesaj veya değişken içeriği için tercih edilebilir...
+print("Hello world!")
+```
+
+```{r}
+a = 3.141567
+print(a)
+```
+
+```{r}
+a = 3.141567
+print(digits=4, a)
+```
+
+```{r}
+print(digits=4, x = 22/7)
+```
+
+```{r}
+# Tırnaklarda hangi tırnak ile başladı isek onla bitirmeliyiz!
+print("Merhaba')
+```
+
+```{r}
+print("3.14")
+print(3.14)
+```
+
+```{r}
+# veri tipini öğrenmek için
+typeof(3.14)
+```
+
+```{r}
+class(3.14)
+```
+
+```{r}
+x <- 5
+print("sayı..:", x)  # tek bir değer yazdırır
+```
+
+```{r}
+x <- 5
+print(paste("sayı..:", x))  # çözüm-1
+```
+
+```{r}
+x <- 5
+cat("sayı..:", x)  # çözüm-2
+```
+
+```{r}
+x <- 5
+cat("sayı..:", "değeri..:", x)  # çözüm-2
+```
+
+```{r}
+x <- 5
+message("sayı..:", x)  # çözüm-3
+```
+
+```{r}
+x = 5
+y = 6
+cat("X sayısı..:", x)
+cat("Y sayısı..:", y)
+```
+
+```{r}
+# R Stil klavuzu önerisi
+x = 5
+y = 6
+cat("X sayısı..:", x, "\n")
+cat("Y sayısı..:", y, "\n")
+```
+
+```{r}
+paste0("Merhaba", x+y)
+```
+
+```{r}
+paste("Merhaba", x+y) # value'lar arasına birer boşluk yerleştirir.
+```
+
+```{r}
+ad = c("Bulent", "Leyla", "Soner", "Ayşe")
+soyad = "Alternatif"
+paste(ad, soyad) #defaut değerler ayrıştırdı
+```
+
+```{r}
+vek1 <- c("A", "B", "C")
+vek2 <- c("1", "2", "3")
+
+print(paste(vek1, vek2, collapse = "*", sep="-"))
+```
+
+```{r}
+ad = c("Bulent", "Leyla", "Soner", "Ayşe")
+soyad = "Alternatif"
+print(paste(ad, soyad, sep="-")) #sep="-"
+```
+
+```{r}
+ad = c("Bulent", "Leyla", "Soner", "Ayşe")
+soyad = "Alternatif"
+print(paste(ad, soyad, collapse="-")) #collapse="-"
+```
+
+```{r}
+vek1 <- c("A", "B", "C")
+vek2 <- c("1", "2", "3")
+
+print(paste(vek1, vek2, sep="-"))
+print(paste(vek1, vek2, collapse = " - "))
+print(paste(vek1, vek2, collapse = "-", sep="*"))
+```
+
+```{r}
+print('Ali\tgel\'dedi ben olmaz\'\ndedim.') #escape karakterleri print'e işlemez!!
+```
+
+```{r}
+cat('Ali\tgel\'dedi ben olmaz\'\ndedim.')
+```
+
+```{r}
+writeLines('Ali\tgel\'dedi ben olmaz\'\ndedim.')
+```
+
+```{r}
+x <- "a\\b"
+cat(x)
+
+x <- "a\nb"
+cat(x)
+
+x <- "\a"  # beep sesi
+cat(x)
+
+x <- "a\b" # backspace işlevi
+cat(x)
+```
+
+```{r}
+x <- "a\\b"
+cat(x)
+x <- "a\b"
+cat(x)
+x <- "a\'b"
+cat(x)
+```
+
+```{r}
+# ASCII kod tablosundaki karakterleri basmak için
+text = "\x48\x69"
+cat(text)
+```
+
+```{r}
+# ASCII/unicode kod tablosundaki karakterleri basmak için
+text = "\u0048\u0069"
+cat(text)
+```
+
+```{r}
+# ASCII tablosundaki decimal değerden char'a dönüşüm
+intToUtf8(69)
+```
+
+```{r}
+# Tersi işlem
+utf8ToInt('E')
+```
+
+```{r}
+# colab için birden fazla yorum satırı yapma : Ctrl+/
+# text = "\x48\x69"
+# cat(text)
+# RSutdio için Ctrl + Shift + C
+```
+
+```{r}
+# dışardan veri girişi: readline
+ad <- readline("Ad.: ")
+cat("Adınız.:", ad, "\n")
+```
+
+```{r}
+# dışardan veri girişi: readline
+a <- readline("sayı-1.: ")
+b <- readline("sayı-2.: ")
+toplam = a+b
+cat("Toplam.:", toplam, "\n")
+```
+
+```{r}
+# dışardan veri girişi: readline
+a <- as.numeric(readline("sayı-1.: "))
+b <- as.numeric(readline("sayı-2.: "))
+toplam = a+b
+cat("Toplam.:", toplam, "\n")
+```
+
+```{r}
+first_number = 400
+second_number = 200
+second_number -> first_number
+cat(first_number, second_number)
+```
+
+```{r}
+first_number = 400
+second_number = 200
+second_number <- first_number
+print(first_number)
+print(second_number)
+```
+
+```{r}
+# R da tek satırda çoklu atama yoktur
+a, b, c = 5, 3.15, "ali"
+cat(a,b,c)
+```
+
+```{r}
+# ille de çoklu atama isteniyorsa listeler kullanılabilir...
+```
+
+```{r}
+# R da değişken ismi olarak kullanılamayacak reserved kelimeler için
+?reserved
+```
+
+‘if’ ‘else’ ‘repeat’ ‘while’ ‘function’ ‘for’ ‘in’ ‘next’ ‘break’
+
+‘TRUE’ ‘FALSE’ ‘NULL’ ‘Inf’ ‘NaN’ ‘NA’ ‘NA_integer_’ ‘NA_real_’
+‘NA_complex_’ ‘NA_character_’
+
+```{r}
+.adsoyad = "ali"
+ad_soyad = "ali"
+_adsoyad = "veli"  #geçersiz
+```
+
+```{r}
+.adsoyad
+```
+
+# R Stil klavuzu:
+https://style.tidyverse.org/
+
+https://jef.works/R-style-guide/
+
+```{r}
+install.packages("styler")
+```
+
+```{r}
+# Bad
+if (a < d)
+{
+    a <- (b + c) * d
+} else a <- d
+```
+
+```{r}
+# RStudio için Addins -> STYLER... otomatik düzeltme
+# Good
+if (a < d) {
+    a <- (b + c) * d
+} else {
+    a <- d
+}
+```
+
+```{r}
+x <- 5
+y <- 10
+#swap için 3. değişken kullanılır
+z <- x # x boşaldı
+x <- y # y boşaldı
+y <- z
+cat("x.: ", x, "\n", "y.: ", y, "\n")
+```
+
+```{r}
+x <- "42"
+y <- as.numeric(x)
+q <- as.double(y)
+z <- as.character(q)
+r <- as.complex(y)
+
+print(paste(y, typeof(y), sep=":"))
+print(paste(q, typeof(q), sep=":"))
+print(paste(z, typeof(z), sep=":"))
+print(paste(r, typeof(r), sep=":"))
+```
+
+```{r}
+print(paste(y, class(y), sep=":"))  # class : numeric tip
+```
+
+```{r}
+dt = "2023-11-02"
+dt1 = as.Date(dt)
+print(paste(dt1, typeof(dt1)))
+# typeof : basit veri tipleri; class : daha üst ve diğer veri tipleri için
+print(paste(dt1, class(dt1)))
+```
+
+```{r}
+# Bugünkü tarih
+Sys.Date()
+```
+
+```{r}
+class(Sys.Date())
+```
+
+```{r}
+typeof(Sys.Date())
+```
+
+```{r}
+print (as.logical(3)) # ?
+print (as.logical(-2)) # ?
+print (as.logical(0)) # ?
+print (as.logical(NaN)) # ? NA : kayıp veri
+print (as.logical(0.0)) # ?
+print (as.logical(5) + as.logical(-5)) # TRUE:1 / FALSE:0 aritmetiksel işlemlerde
+```
+
+```{r}
+# Logical ifadeler aritmetiksel işlemlerde 1/0 gibi davranır...
+as.logical(5) + as.logical(0)  # 1+0
+```
+
+```{r}
+typeof(as.logical(5) + as.logical(0))
+```
+
+```{r}
+TRUE + TRUE
+```
+
+```{r}
+FALSE + FALSE
+```
+
+```{r}
+FALSE + TRUE
+```
+
+```{r}
+# negatif sayıların karekökü:
+sqrt(4)
+```
+
+```{r}
+sqrt(-4)
+```
+
+```{r}
+# complex forma dönüştürülür;
+sqrt(-4+0i)
+```
+
+```{r}
+sqrt(as.complex(-4))
+```
+
+```{r}
+Im(sqrt(as.complex(-4)))  # negatif sayı karekökünü alma
+```
+
+```{r}
+Re(-4+3i)
+```
+
+```{r}
+Im(-4+3i)
+```
+
+#Operatörler
+
+```{r}
+2^3 # üs alma
+```
+
+```{r}
+2**3 # üs alma
+```
+
+```{r}
+# mod alma
+5%%2
+```
+
+```{r}
+# normal bölme
+5/2
+```
+
+```{r}
+5%/%2  # tam bölme
+```
+
+```{r}
+x = -6
+y = 6
+x == (x %% y) + y * (x %/% y)
+#işleminin sonucu her daim TRUE’ dur.
+```
+
+```{r}
+s = 5
+alan = s^2*(sqrt(5)/4)
+alan
+```
+
+```{r}
+!(3==3) # not
+```
+
+```{r}
+(3==3) | (5<5) # or:|
+```
+
+```{r}
+(3==3) & (5<5) # and: &
+```
+
+```{r}
+#& | ile && || operetörlerinin farkı:
+c(T, T, FALSE, F) && c(F, F, T, TRUE) # tek bir elemanı değerlendirir
+```
+
+```{r}
+c(T, T, FALSE, F) & c(F, F, T, TRUE) # birden fazla elemanı değerlendirir
+```
+
+```{r}
+c(T, T, FALSE, F) | c(F, F, T, TRUE) # birden fazla elemanı değerlendirir
+```
+
+```{r}
+c(T, T, FALSE, F)[1] && c(F, F, T, TRUE)[1] # ilk elemanı değerlendirir
+```
+
+```{r}
+c(T, T, FALSE, F)[1] & c(F, F, T, TRUE)[1:2] # ilk iki elemanı değerlendirir
+```
+
+```{r}
+3:5  # ':' sıralı elemanlar üretir
+```
+
+```{r}
+#match operatörü: %in%
+3:5 %in% c(1,2,3,5,6,7)
+```
+
+```{r}
+c('a','b','e') %in% c('b', 'Ba', 'baba', 'eli')
+```
+
+```{r}
+# kendi(herhangi bir) operatörümü oluşturma %any%
+'%carp%' <- function(x,y) {
+    return (x*y)
+}
+
+# operatörü kullanalım
+a = 5
+b = 6
+a %carp% b
+```
+
+#infix operatörler
+
+```{r}
+'+'(3, 5)  # 3+5
+```
+
+```{r}
+'^'(2, 4)
+```
+
+```{r}
+'=='('ali','veli')
+```
+
+```{r}
+bitwAnd(3,5) # 011 and 101 = 001
+```
+
+```{r}
+bitwOr(3,5) # 011 or 101 = 111
+```
+
+```{r}
+# negatif yapma 5 - 3 = 5 + (-3) ?
+```
+
+```{r}
+bitwNot(5) + 1  # sayıyı negatif yapma
+```
+
+```{r}
+# 5-3 işlemi
+5 + (bitwNot(3) + 1)
+```
+
+```{r}
+# matematiksel işlemler
+factorial(5)
+```
+
+```{r}
+max(5,4,6,3,2)  # birden fazla değerin maximumu
+```
+
+```{r}
+min(5,4,6,3,2)  # birden fazla değerin minimumu
+```
+
+```{r}
+sum(1:10)
+```
+
+```{r}
+print(pi, digits=4)
+```
+
+```{r}
+1000^2  # 1*10^5
+```
+
+```{r}
+1e+5/1e2
+```
+
+```{r}
+# Girilen sayını tek mi , çift mi olduğunu söyleyen bir program
+num = as.numeric(readline("sayı gir..: "))
+if (num%%2==0){
+    print("Çift")
+}else {
+    print("Tek")
+}
+```
+
+```{r}
+num = as.numeric(readline("sayı gir..: "))
+if (num%%2){
+    print("Tek")
+}else {
+    print("Çift")
+}
+```
+
+```{r}
+num = as.numeric(readline("sayı gir..: "))
+if (num%%2) print("Tek") else print("Çift")
+```
+
+```{r}
+x <- -6
+# x, poz, neg, zero mu?
+if (x>0){
+    print("pozitif")
+}else if(x<0){
+    print("negatif")
+}else{
+    print("sıfır")
+}
+```
+
+```{r}
+x <- 0
+# x, poz, neg, zero mu?
+print(
+    # ifelse(koşul, true ise..., false ise... )
+    ifelse(x>0, "pozitif", ifelse(x<0, "negatif", "sıfır")
+    )
+)
+```
+
+```{r}
+AA = 'bade'
+switch(AA,
+foo={ # case 'foo' ...
+  print('foom')
+},
+bar={ # case 'bar'...
+  print('barım')
+},
+{ # case else ...
+   print('default')
+}
+)
+```
+
+```{r}
+# sık kullanım şekli
+indis = 2 # indis no: 1 ile başlar
+switch(indis, foo={"foom"}, bar={"barım"}, els={"else"} )
+```
+
+```{r}
+sign(5)
+```
+
+```{r}
+sign(-5)
+```
+
+```{r}
+sign(0)
+```
+
+```{r}
+AA = -10
+switch(as.character(sign(AA)),
+"1"={
+  print('pozitif')
+},
+"-1"={
+  print('negatif')
+},
+{ # case else ...
+   print('sıfır')
+}
+)
+```
+
+```{r}
+typeof(TRUE + FALSE)
+```
+
+```{r}
+'a' %in% 'ali'
+```
+
+```{r}
+'a' %in% c('a','l','i')
+```
+
+# Anlatmadıklarımız
+
+```{r}
+# bir fonksiyon hakkında fuzzy arama:
+apropos("nova")
+```
+
+```{r}
+# C tarzı ekrana yazdırma sprintf
+maas = 44500
+sprintf("%s nin %d TL %s geliri var", "Sami", maas, "maaş")
+```
+
