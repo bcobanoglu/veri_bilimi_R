@@ -1,0 +1,739 @@
+---
+title: An R Markdown document converted from "/content/session2_03_11_2023_R.ipynb"
+output: html_document
+---
+
+```{r}
+# .pynb uzantılı dosyayı .R veya .Rmd ye dönüştürme
+library(rmarkdown)
+library(knitr)
+library(xfun)
+
+input <- "/content/02_11_23_session1_R.ipynb"
+
+# First convert to .Rmd...
+convert_ipynb(input)
+
+# ..then convert .Rmd
+purl(with_ext(input, "Rmd")) # output = with_ext(input, "R"))
+```
+
+```{r}
+print(rep("ali ", times=5))
+```
+
+```{r}
+rep("ali ", times=5)
+```
+
+```{r}
+# girileni 5 kez tekrarla
+ad = readline("Ad..: ")
+vek <- rep(ad, times = 5)
+cat(vek, sep="\n")
+```
+
+```{r}
+rep(1:5, each=2)
+```
+
+```{r}
+rep(0:4, length.out=8)
+```
+
+```{r}
+rep(0:5, length.out=10)
+```
+
+```{r}
+# bir kombinasyona göre hareket edebiliriz; mehter yürüşü
+rep(1:4, c(2,1,2,1))
+```
+
+```{r}
+print(rep(1:3, c(1,2,3)))
+```
+
+```{r}
+# rep()' in repeat.last diye bir parametresi yok...
+# ama son elemanı tekralama veya 5 kez tekrarla gibi işlemler için dilimleme....
+```
+
+```{r}
+rep(1:5, each=3)
+```
+
+```{r}
+seq(1,5,2) # from=1, to=5, by=2
+```
+
+```{r}
+seq(from=9, to=1, by=-2)
+```
+
+```{r}
+seq(from=9, to=2, by=-1)
+```
+
+```{r}
+seq(to=1, by=-2, from=9)
+```
+
+```{r}
+seq(9, 1, -2)
+```
+
+```{r}
+seq(0,-2,9)
+```
+
+```{r}
+1:5
+```
+
+```{r}
+seq(1,5)
+```
+
+```{r}
+seq(9)
+```
+
+```{r}
+seq(1, 9, by = pi)
+```
+
+# LOOPS
+
+*   while
+*   repeat
+*   for
+
+
+
+
+```{r}
+i <- 65
+while(i<=90){
+    cat(intToUtf8(i), ":", i, "\n")
+    i = i + 1 # i++, i+=1
+}
+```
+
+```{r}
+# sonsuz döngü:
+my_pass = "sifre1234"
+while(TRUE){
+    user_pass <- readline("Şifreniz..: ")
+    if (user_pass != my_pass){
+        cat("Parola yanlış, Tekrar deneyiniz!!\n")
+        flush.console()  # console akışını temizle
+    } else{
+        cat("Parola doğru, Hoşgeldiniz..\n")
+        flush.console()  # console akışını temizle
+        break  # döngü kırılır
+    } # else sonu
+} # while sonu
+```
+
+```{r}
+# while(TRUE) "sonsuz döngü" yerine repeat döngüleri tercih edilir..
+# sonsuz döngü:
+my_pass = "sifre1234"
+repeat{
+    user_pass <- readline("Şifreniz..: ")
+    if (user_pass != my_pass){
+        cat("Parola yanlış, Tekrar deneyiniz!!\n")
+        flush.console()  # console akışını temizle
+    } else{
+        cat("Parola doğru, Hoşgeldiniz..\n")
+        flush.console()  # console akışını temizle
+        break  # döngü kırılır
+    } # else sonu
+} # while sonu
+```
+
+```{r}
+for i in 1:5{
+    print(i)
+}
+```
+
+```{r}
+for (i in 1:5) {
+    print(i)
+}
+```
+
+```{r}
+# while - for eşdeğeri
+for (i in 65:90){
+    cat(intToUtf8(i), ":", i, "\n")
+}
+```
+
+```{r}
+# next : diğer dillerdeki continue eşdeğeri, alttaki satırları atlar ve döngü başı yapar
+for (i in 1:10){
+    # tek sayıları süzelim
+    if (i%%2==0) {
+        next
+    # }
+    cat(i, " ")
+}
+```
+
+```{r}
+for (i in 1:10){
+    if (i%%2) {
+        next
+    }
+    cat(i, " ")
+}
+```
+
+```{r}
+calisanlar <- c("Ali", "Bulent", "Ayşe", "Mehmet")
+mod <- c("MUTLU", "MUTSUZ")
+for (i in calisanlar){
+    for(ii in mod){
+        cat(i, ii, "\n")
+    }
+}
+```
+
+# Temel istatiksel fonksiyonlar
+
+```{r}
+data <- c(24, 16, 12, 10, 28, 38, 12, 28, 24)
+# data veya data seti hakkında özet istatistiki bilgiler için
+summary(data)
+```
+
+```{r}
+min(data)
+```
+
+```{r}
+max(data)
+```
+
+```{r}
+range(data) # min max değerlerini birlikte verir
+```
+
+```{r}
+median(data)
+```
+
+```{r}
+mean(data)
+```
+
+```{r}
+# sayısal loto
+sample(1:49, size=6) #6 örneklem alacağız
+```
+
+```{r}
+sample(1:49, size=6, replace = FALSE)
+```
+
+```{r}
+# sayısal loto
+sample(1:49, size=6, replace = TRUE) # 6 örneklem alacağız ama tekrarlı sayılar olabilir
+```
+
+```{r}
+# Hep aynı sayılar üretilsin isteniyorsa
+set.seed(5)
+sample(1:49, size=6)
+```
+
+```{r}
+# Zar atışı : unifrom dağılıma örnek
+# set.seed(1)
+# Bir zarın 10.000 kez atıldığında 1-6 arası gelme olasılığı nedir?
+zarAtislari <- runif(n=10000, min=1, max=6)
+print("Zar Atışı")
+# histogram grafiği ile gösterelim
+hist(zarAtislari)
+```
+
+```{r}
+# 0rtalama notu 70 ve standart sapması 5 olan rastgele 100 öğrenci notunun normal dağılımını
+# histogram ile gösterelim.
+#set.seed(3)
+ortalama = 70
+standart_sapma = 5
+ogr_not = 100
+# normal dağılıma göre notların random üretilmesi isteniyor
+not_datasi <- round(rnorm(n=ogr_not, mean=ortalama, sd=standart_sapma))
+# histogram grafiği ile gösterelim
+hist(not_datasi, main= "Öğrenci Notları", xlab = "Notlar", ylab="Frekans", col = "blue")
+```
+
+```{r}
+# 65-75 arası not alan yaklaşık kaç kişi vardır? (mean = 70, sd=5)
+not_datasi[not_datasi>65 & not_datasi<75]
+```
+
+```{r}
+length(not_datasi[not_datasi>65 & not_datasi<75])
+```
+
+```{r}
+# sample örneği
+notlar <- round(runif(20, min=1, max=100))
+# 50 den yüksek olanlar
+notlar_50 <- notlar[notlar>50]
+print(notlar_50)
+# rastgele 5 tanesi seç
+notlar50 <- sample(notlar_50, size=5)
+notlar50
+```
+
+# Fonksiyon Tanımlama
+
+```{r}
+hipotenus <- function(a,b){
+    c <- sqrt(a^2 + b^2)
+    return (c)
+}
+# fonksiyonu çağıralım
+hipotenus(3,4)
+```
+
+```{r}
+carp <- function(a,b){
+    return a*b
+}
+# fonksiyonu çağıralım
+carp(3,4)
+```
+
+```{r}
+carp <- function(a,b){
+    return(a*b)
+}
+# fonksiyonu çağıralım
+carp(3,4)
+```
+
+```{r}
+carp(-3, 2.4)
+```
+
+```{r}
+isTekCift <- function(vektor){ # xx -> vektor
+    result <- ifelse(vektor%%2==0, "ÇİFT", "TEK")
+    return (result)
+}
+
+# fonksiyonu çağıralım
+xx <- c(8, 3, 4, 5, 6, 7)
+yy <- isTekCift(xx)
+yy
+```
+
+```{r}
+"%strMul%" <- function(string, num){
+    sonuc <- rep(string, times=num)
+    return (sonuc)
+}
+# fonksiyondan özel operatör üretme
+"ali " %strMul% 5
+```
+
+```{r}
+"%strMul%"('R dili', 6) #infix operatör
+```
+
+```{r}
+# Lambda (anonim) fonksiyon:
+# Lambda içerisinde return kullanılmaz
+carpim <- function(a,b) a*b
+# fonksiyonu çağıralım
+carpim(3,4)
+```
+
+```{r}
+# recursive function : kendi kendine atıfta bulunan fonksiyon
+faktoriyel <- function(n) {
+if (n == 0) {
+return(1) # 0! = 1 : durdurma koşulu
+} else {
+return(n * faktoriyel(n - 1)) # 5! = 5*4! = 5*4*3! ...
+}
+}
+
+#fonksiyonu çağıralım:
+faktoriyel(5)
+```
+
+```{r}
+# iç içe fonksiyonu tek satıra indirgeme (lambda haline)
+dis_fonksiyon <- function(a,b){
+    ic_fonksiyon <- function(x,y){
+        return(x*y)
+    }
+    sonuc <- ic_fonksiyon(a,b)
+    return(sonuc)
+}
+# çağıralım
+dis_fonksiyon(3,5)
+```
+
+```{r}
+sonuc <- (function(a,b) (function(x,y) x*y) (a,b)) (3,5)
+sonuc
+```
+
+```{r}
+# R-> LEGB kuralı
+var = 30
+kapsayan_f<-function() {
+    var <- 20
+    local_f<-function(){
+        var <- 10
+        print(var)
+    }
+    local_f()
+    print(var)
+}
+
+kapsayan_f()
+print(var)
+```
+
+```{r}
+# local değeri globale taşımak istediğimzde "<<-" kullanılır
+# R-> LEGB kuralı
+var = 30
+kapsayan_f<-function() {
+    var <<- 20
+    local_f<-function(){
+        var <<- 10
+        print(var)
+    }
+    local_f()
+    print(var)
+}
+
+kapsayan_f()
+print(var)
+```
+
+```{r}
+# local değeri globale taşımak istediğimzde "<<-" kullanılır
+# R-> LEGB kuralı
+var = 30
+kapsayan_f<-function() {
+    var <- 20
+    local_f<-function(){
+        var <<- 10
+        print(var)
+    }
+    local_f()
+    print(var)
+}
+
+kapsayan_f()
+print(var)
+```
+
+```{r}
+# local değeri globale taşımak istediğimzde "<<-" kullanılır
+# R-> LEGB kuralı
+var = 30
+kapsayan_f<-function() {
+    var <<- 20
+    local_f<-function(){
+        var <- 10
+        print(var)
+    }
+    local_f()
+    print(var)
+}
+
+kapsayan_f()
+print(var)
+```
+
+#apply ailesi
+
+```{r}
+apropos("apply")
+```
+
+```{r}
+vekt <- c(1:10)
+new_vekt <- vector()  # boş bir vektör: tipi logical
+for (i in vekt){
+    new_vekt <- append(new_vekt, i+1)
+}
+
+new_vekt
+```
+
+```{r}
+vekt <- c(1:10)
+new_vekt <- vector()  # boş bir vektör: tipi logical
+new_vekt <- sapply(vekt, function(i) i+1)
+new_vekt
+```
+
+```{r}
+vekt <- c(1:10)
+new_vekt <- sapply(vekt, function(i) i+1)
+new_vekt
+```
+
+```{r}
+vekt <- vector() # boş bir vektör
+typeof(vekt)
+vekt_int <- c(5L, 6L, 3L, 9L, 2L)
+typeof(vekt_int)
+```
+
+```{r}
+# character tipte boş bir vektör oluşturmak için
+empty_vec <- vector("character", length=0)
+typeof(empty_vec)
+```
+
+```{r}
+str(vekt_int)
+```
+
+```{r}
+vekt_dbl <- c(5L, 6L, 3L, 9L, 2)
+typeof(vekt_dbl)
+```
+
+```{r}
+str(vekt_dbl) # hep veri tipini hemde içeriği verir
+```
+
+```{r}
+vek_str <- c('a', "ba", "baba", 5, 3.14)
+vek_str # hepsini üst bir tipe dönüştürerek aynılaştırır.
+```
+
+```{r}
+str(vek_str)  # tipini ve içeriğini gösterir
+```
+
+```{r}
+bool_nots <- c(92, TRUE, FALSE, 95, 77L, 92, 85L)  # tipi nedir?
+class(bool_nots)
+```
+
+```{r}
+# uzunluklar;
+vektor = c("Ne", "olursan", "ol", "R'a", "gel", "MEVLANA")
+# karater/eleman sayısı:
+length(vektor)
+#her bir karakterin uzunluğu:
+nchar(vektor)
+```
+
+```{r}
+# bir vektörü ters çevirme : rev()
+rev(vektor)
+```
+
+```{r}
+sort(vektor)  # string'lerde büyük/küçük harf ayrımı yapmadan
+```
+
+```{r}
+notlar <- round(runif(20, min=1, max=100))
+print(notlar)
+```
+
+```{r}
+# normal sıralama
+sort(notlar)
+```
+
+```{r}
+# sıralama
+notlar <- sort(notlar)
+rev(notlar)
+```
+
+```{r}
+sort(notlar, decreasing = TRUE)
+```
+
+```{r}
+notlar <- round(runif(20, min=1, max=100))
+print(notlar)
+# en küçük -en büyük not
+range(notlar)
+```
+
+```{r}
+nums <- c(5,6,7,3,2,1,78,54,32)
+rank(nums) # kendi içerisindeki sıralanmış sırasını/indisini verir
+```
+
+```{r}
+sort(nums)
+```
+
+```{r}
+vektor = c("Ne", "olursan", "ol", "R'a", "gel", "MEVLANA")
+sort(vektor)
+```
+
+```{r}
+rank(vektor)
+```
+
+```{r}
+vektor = c("Ne", "olursan", "ol", "Ne", "gel", "MEVLANA", NaN)
+tekrarsiz_vektor = unique(vektor)
+print(tekrarsiz_vektor)
+```
+
+```{r}
+vektor <- c(5,2,NA, NaN, 6, 7, NaN)
+is.nan(vektor) # (Not a Number)
+```
+
+```{r}
+is.na(vektor)  # na kapsar NaN
+```
+
+```{r}
+vektor <- c(5, 2, NA, 6, 7)
+rank(vektor, na.last=FALSE) # NA'ları başa atar
+```
+
+```{r}
+vektor <- c(5, 2, NA, 6, 7)
+rank(vektor, na.last=TRUE) # default: TRUE ve (NA'ları sona atar)
+```
+
+```{r}
+vektor <- c(5, 2, NA, 6, 7)
+rank(vektor) # default: TRUE ve (NA'ları sona atar)
+```
+
+```{r}
+vektor <- c(5,2, NA, NaN, 6, 7, NaN)
+rank(vektor, na.last="keep") # NA'lar yerinde kalır
+```
+
+```{r}
+vektor <- c(5,2, NA, NaN, 6, 7, NaN)
+rank(vektor, na.last=NA) # NA'lar GÖZÜKMEZZ
+```
+
+```{r}
+vektor = c("Ne", "olursan", "ol", "Ne", "gel", "MEVLANA", NA)
+is.na(vektor)
+```
+
+# all() ve any() fonksiyonları
+
+```{r}
+notlar <- round(runif(20, min=1, max=100))
+any(notlar>95)  # hiç 95 ve üzeri var mı?
+```
+
+```{r}
+notlar <- round(runif(20, min=1, max=100))
+all(notlar>95)  # hepsi 95 ve üzeri var mı?
+```
+
+```{r}
+0/0 # Tanımsız işlem
+```
+
+```{r}
+# Bu iki vektör aynı mı?
+vek1 <- c(10, 11, 12, 13, 16)
+vek2 <- c(10, 11, 12, 14, 13)
+vek1==vek2  #birebir eşleme
+```
+
+```{r}
+all(vek1==vek2) # hepsi birbirine eşit mi?
+```
+
+```{r}
+setdiff(vek1,vek2)  #vek1 de olup vek2'de olmayanları listele
+```
+
+```{r}
+setdiff(vek2,vek1)  #vek2 de olup vek1'de olmayanları listele
+```
+
+# index kavramı
+
+```{r}
+# pozitif indis o elemanı, negatif ise o eleman haricindikileri işaret eder
+S = c("R","S","T","U","D","I","O")
+print(S[1])
+print(S[3])
+print(S[-3])
+```
+
+```{r}
+#sesli harfleri çıkar,
+S = c("R","S","T","U","D","I","O")
+new_S <- S[-4]
+new_S <- new_S[-5]
+new_S <- new_S[-5]
+new_S
+```
+
+```{r}
+exam_nots <- c(92, 90, 84, 95, 77, 92, 85L)
+exam_nots[c(1,3,7)]  # 92 84 85
+```
+
+```{r}
+S = c("R","S","T","U","D","I","O")
+#sesli harfleri alalım
+S <- S[c(4,6,7)]
+S
+```
+
+```{r}
+S = c("R","S","T","U","D","I","O")
+#sessiz harfleri alalım
+S <- S[c(-4,-6,-7)]
+S
+```
+
+```{r}
+beyin_dalgasi <- c("Alpha", "Beta", "Theta", "Delta") # Vektör
+i <- c(FALSE, TRUE, FALSE, TRUE) # logical vector
+beyin_dalgasi[i] # TRUE'lara denk gelen dataları döndür
+beyin_dalgasi[!i] # FALSE'lara  denk gelen dataları döndür
+beyin_dalgasi[i == FALSE] # FALSE'lara  denk gelen dataları döndür
+```
+
+```{r}
+# subset() koşula uyan alt küme(vektör, seti)
+exam_nots <- c(92, 50, 84, 95, 47, 92, 85L, 44)
+# 45-85 arası notları almak
+nots <- subset(exam_nots, exam_nots>45 & exam_nots<85)
+nots
+```
+
+```{r}
+beyin_dalgasi <- c("Alpha", "Beta", "Theta", "Delta", "Baba")
+startsWith(beyin_dalgasi, "B")
+```
+
+```{r}
+# B ile başlayanları al
+beyin_dalgasi <- c("Alpha", "Beta", "Theta", "Delta", "Baba")
+subset(beyin_dalgasi, startsWith(beyin_dalgasi, "B"))
+```
+
